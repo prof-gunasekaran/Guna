@@ -1,0 +1,7 @@
+{
+  "name": "Tamil PDF Reader - தமிழ் மின்னூல் படிப்பான்",
+  "description": "A elegant Tamil language PDF reader that extracts text from PDFs, stores them in a personal library, and allows sharing and exporting text to social apps.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

@@ -1,0 +1,18 @@
+
+{
+  "name": "Tamil Document Reader",
+  "short_name": "Tamil Reader",
+  "description": "தமிழ் மின்னூல் படிப்பான் - PDF மற்றும் Word கோப்புகளை படிக்க",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3389/3389025.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

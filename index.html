@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4f46e5">
+    <title>Tamil Document Reader</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3389/3389025.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Embedding high-quality Tamil Unicode fonts from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@100..900&family=Noto+Serif+Tamil:wght@100..900&family=Mukta+Malar:wght@200..800&family=Arima+Madurai:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <style>
+        :root {
+            /* Unicode-first font stack for maximum compatibility */
+            --tamil-font-stack: 'Noto Sans Tamil', 'Mukta Malar', 'Latha', 'Vijaya', 'Arial Unicode MS', sans-serif;
+            --tamil-font-serif-stack: 'Noto Serif Tamil', 'Arima Madurai', 'Tiro Tamil', serif;
+        }
+        
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: var(--tamil-font-stack);
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-display: swap;
+            overscroll-behavior-y: contain;
+        }
+
+        @font-face {
+            font-family: 'TamilUnicode';
+            src: local('Noto Sans Tamil'), local('Latha'), local('Vijaya');
+            unicode-range: U+0B80-0BFF;
+            font-display: swap;
+        }
+
+        .tamil-text {
+            font-family: 'TamilUnicode', var(--tamil-font-stack);
+        }
+
+        .tamil-text-serif {
+            font-family: var(--tamil-font-serif-stack);
+        }
+
+        [lang="ta"] {
+            font-family: var(--tamil-font-stack) !important;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::selection {
+            background: #c7d2fe;
+            color: #312e81;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
+          });
+        }
+    </script>
+</body>
+</html>
