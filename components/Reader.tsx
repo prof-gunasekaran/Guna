@@ -60,44 +60,46 @@ const Reader: React.FC<ReaderProps> = ({ book, onBack }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fadeIn pb-32" onMouseUp={handleMouseUp} onKeyUp={handleMouseUp}>
+    <div className="max-w-4xl mx-auto space-y-10 animate-fadeIn pb-32" onMouseUp={handleMouseUp} onKeyUp={handleMouseUp}>
       {/* Control Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sticky top-16 bg-slate-50/95 backdrop-blur-md py-4 z-20 border-b border-slate-200 px-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 sticky top-20 bg-[#fdfcfb]/90 backdrop-blur-xl py-6 z-40 border-b border-stone-200 px-6 rounded-2xl shadow-sm">
         <button 
           onClick={onBack}
-          className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-bold transition-colors"
+          className="flex items-center gap-2 text-stone-600 hover:text-orange-600 font-black transition-all group"
         >
-          <ArrowLeft size={20} />
-          பின்செல்
+          <div className="bg-stone-100 p-2 rounded-xl group-hover:bg-orange-50 transition-colors">
+            <ArrowLeft size={20} />
+          </div>
+          <span>பின்செல்</span>
         </button>
 
-        <div className="flex items-center flex-wrap gap-3">
+        <div className="flex items-center flex-wrap gap-4">
           {/* Font Controls */}
-          <div className="flex items-center bg-white border border-slate-200 rounded-xl p-1 shadow-sm">
+          <div className="flex items-center bg-white border border-stone-200 rounded-2xl p-1.5 shadow-sm">
             <button 
               onClick={() => setFontSize(Math.max(16, fontSize - 2))}
-              className="p-2 hover:bg-slate-100 rounded-lg text-slate-600 transition-colors"
+              className="p-2.5 hover:bg-stone-50 rounded-xl text-stone-500 transition-colors"
               title="சிறிய எழுத்து"
             >
               <Type size={16} />
             </button>
-            <span className="px-3 text-sm font-bold text-slate-700 min-w-[40px] text-center">
+            <span className="px-4 text-sm font-black text-stone-800 min-w-[48px] text-center">
               {fontSize}
             </span>
             <button 
               onClick={() => setFontSize(Math.min(48, fontSize + 2))}
-              className="p-2 hover:bg-slate-100 rounded-lg text-slate-600 transition-colors"
+              className="p-2.5 hover:bg-stone-50 rounded-xl text-stone-500 transition-colors"
               title="பெரிய எழுத்து"
             >
               <Type size={22} />
             </button>
             
-            <div className="w-[1px] h-6 bg-slate-200 mx-2" />
+            <div className="w-[1px] h-8 bg-stone-100 mx-3" />
             
             <select 
               value={fontFamily}
               onChange={(e) => setFontFamily(e.target.value as any)}
-              className="text-xs font-bold text-slate-600 bg-transparent border-none focus:ring-0 cursor-pointer pr-8"
+              className="text-xs font-black text-stone-600 bg-transparent border-none focus:ring-0 cursor-pointer pr-10 py-2"
             >
               <option value="sans">Sans Tamil</option>
               <option value="serif">Serif Tamil</option>
@@ -105,23 +107,23 @@ const Reader: React.FC<ReaderProps> = ({ book, onBack }) => {
             </select>
           </div>
 
-          <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl p-1 shadow-sm">
+          <div className="flex items-center gap-3 bg-white border border-stone-200 rounded-2xl p-1.5 shadow-sm">
             <button 
               onClick={handleCopy}
-              className={`p-2 rounded-lg flex items-center gap-2 transition-all ${copied ? 'bg-green-100 text-green-700' : 'hover:bg-slate-100 text-slate-600'}`}
+              className={`p-2.5 rounded-xl flex items-center gap-3 transition-all ${copied ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-stone-50 text-stone-600'}`}
               title={hasSelection ? "தேர்ந்தெடுத்ததை நகலெடு" : "முழுவதையும் நகலெடு"}
             >
-              {copied ? <Check size={18} /> : (hasSelection ? <Scissors size={18} className="text-indigo-500" /> : <Copy size={18} />)}
-              <span className="text-sm font-bold">
-                {copied ? 'முடிந்தது' : (hasSelection ? 'பகுதி நகல்' : 'முழு நகல்')}
+              {copied ? <Check size={18} /> : (hasSelection ? <Scissors size={18} className="text-orange-500" /> : <Copy size={18} />)}
+              <span className="text-xs font-black uppercase tracking-wider">
+                {copied ? 'நகலெடுக்கப்பட்டது' : (hasSelection ? 'பகுதி நகல்' : 'முழு நகல்')}
               </span>
             </button>
             
-            <div className="w-[1px] h-6 bg-slate-200 mx-1" />
+            <div className="w-[1px] h-8 bg-stone-100 mx-1" />
 
             <button 
               onClick={() => handleShare('whatsapp')}
-              className={`p-2 rounded-lg transition-colors ${hasSelection ? 'bg-green-50 text-green-600' : 'hover:bg-slate-50 text-slate-500'}`}
+              className={`p-2.5 rounded-xl transition-all ${hasSelection ? 'bg-emerald-50 text-emerald-600' : 'hover:bg-stone-50 text-stone-400 hover:text-emerald-500'}`}
               title="வாட்ஸ்அப்"
             >
               <Send size={20} />
@@ -129,7 +131,7 @@ const Reader: React.FC<ReaderProps> = ({ book, onBack }) => {
 
             <button 
               onClick={() => handleShare('telegram')}
-              className={`p-2 rounded-lg transition-colors ${hasSelection ? 'bg-sky-50 text-sky-600' : 'hover:bg-slate-50 text-slate-500'}`}
+              className={`p-2.5 rounded-xl transition-all ${hasSelection ? 'bg-sky-50 text-sky-600' : 'hover:bg-stone-50 text-stone-400 hover:text-sky-500'}`}
               title="டெலிகிராம்"
             >
               <Share2 size={20} />
@@ -139,48 +141,73 @@ const Reader: React.FC<ReaderProps> = ({ book, onBack }) => {
       </div>
 
       {/* Main Content Area */}
-      <article className="bg-white p-6 md:p-16 rounded-[2.5rem] shadow-xl border border-slate-100 min-h-[80vh] selection:bg-indigo-100 selection:text-indigo-900">
-        <header className="mb-12 pb-8 border-b border-slate-100">
-          <h1 className={`text-3xl md:text-5xl font-black text-slate-900 leading-tight ${getFontClass()}`}>
+      <article className="bg-white p-8 md:p-20 rounded-[3rem] shadow-2xl shadow-stone-200/50 border border-stone-100 min-h-[80vh] relative overflow-hidden">
+        {/* Subtle Paper Texture */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/paper.png')]" />
+        
+        <header className="mb-16 pb-12 border-b border-stone-100 relative z-10">
+          <div className="flex items-center gap-3 text-orange-600 font-black text-[10px] uppercase tracking-[0.3em] mb-6">
+            <div className="w-8 h-[2px] bg-orange-600/20" />
+            <span>தமிழ் இலக்கியம்</span>
+          </div>
+          
+          <h1 className={`text-4xl md:text-6xl font-black text-stone-900 leading-[1.15] tracking-tight ${getFontClass()}`}>
             {book.title}
           </h1>
-          <div className="flex items-center justify-between mt-6">
-            <div className="flex items-center gap-4 text-slate-400 text-sm font-medium">
-              <span className="bg-slate-100 px-3 py-1 rounded-full text-slate-600">தமிழ் மின்னூல்</span>
-              <span>•</span>
-              <span>{new Date(book.importedAt).toLocaleDateString('ta-IN')}</span>
+          
+          <div className="flex flex-wrap items-center justify-between mt-10 gap-6">
+            <div className="flex items-center gap-6 text-stone-400 text-xs font-bold uppercase tracking-widest">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-stone-200" />
+                <span>மின்னூல்</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-stone-200" />
+                <span>{new Date(book.importedAt).toLocaleDateString('ta-IN')}</span>
+              </div>
             </div>
+            
             {hasSelection && (
-              <span className="text-xs font-bold text-indigo-500 bg-indigo-50 px-3 py-1 rounded-full animate-pulse">
+              <div className="flex items-center gap-2 text-[10px] font-black text-orange-600 bg-orange-50 px-4 py-2 rounded-full border border-orange-100 animate-pulse uppercase tracking-wider">
+                <Scissors size={12} />
                 பகுதி தேர்ந்தெடுக்கப்பட்டுள்ளது
-              </span>
+              </div>
             )}
           </div>
         </header>
 
         <div 
-          className={`text-slate-800 leading-[2] whitespace-pre-wrap transition-all duration-300 focus:outline-none ${getFontClass()}`}
+          className={`text-stone-800 leading-[2.2] whitespace-pre-wrap transition-all duration-500 focus:outline-none relative z-10 ${getFontClass()}`}
           style={{ fontSize: `${fontSize}px` }}
         >
           {book.content}
         </div>
+
+        {/* Decorative End Mark */}
+        <div className="mt-20 flex justify-center opacity-20">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-[1px] bg-stone-400" />
+            <div className="w-2 h-2 rounded-full bg-stone-400" />
+            <div className="w-12 h-[1px] bg-stone-400" />
+          </div>
+        </div>
       </article>
 
       {/* Floating Action Buttons for quick sharing at bottom */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-white/90 backdrop-blur-xl border border-white/50 p-3 rounded-3xl shadow-2xl z-40 ring-1 ring-slate-200/50">
-        <div className="text-xs font-bold text-slate-400 px-2 hidden sm:block">பகிர:</div>
+      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-stone-900/90 backdrop-blur-2xl p-4 rounded-[2rem] shadow-2xl z-50 border border-white/10">
+        <div className="text-[10px] font-black text-stone-400 px-3 uppercase tracking-widest hidden sm:block">பகிர:</div>
         <button 
           onClick={() => handleShare('whatsapp')}
-          className="flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-2xl font-black hover:scale-105 active:scale-95 transition-all shadow-lg shadow-green-200"
+          className="flex items-center gap-3 bg-[#25D366] text-white px-8 py-4 rounded-2xl font-black hover:scale-105 active:scale-95 transition-all shadow-xl shadow-green-900/20"
         >
-          <Send size={18} />
+          <Send size={20} />
           WhatsApp
         </button>
         <button 
           onClick={() => handleShare('telegram')}
-          className="flex items-center gap-2 bg-[#0088cc] text-white px-6 py-3 rounded-xl font-black hover:scale-105 active:scale-95 transition-all shadow-lg shadow-blue-200"
+          className="flex items-center gap-3 bg-[#0088cc] text-white px-8 py-4 rounded-2xl font-black hover:scale-105 active:scale-95 transition-all shadow-xl shadow-blue-900/20"
         >
-          <Share2 size={18} />
+          <Share2 size={20} />
           Telegram
         </button>
       </div>

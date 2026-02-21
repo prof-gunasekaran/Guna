@@ -42,61 +42,58 @@ const Library: React.FC<LibraryProps> = ({ books, onOpen, onDelete, onImportRequ
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8">
         {books.map((book) => (
           <div 
             key={book.id}
-            className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:border-indigo-200 transition-all duration-300 flex flex-col"
+            className="group flex flex-col space-y-3 animate-fadeIn"
           >
-            {/* Cover Mockup */}
+            {/* Realistic Book Wrapper */}
             <div 
-              className={`h-48 ${book.coverColor} flex items-center justify-center p-6 relative cursor-pointer overflow-hidden`}
+              className="relative aspect-[3/4] cursor-pointer perspective-1000"
               onClick={() => onOpen(book)}
             >
-              <div className="bg-white/90 backdrop-blur-sm p-4 rounded shadow-lg transform group-hover:scale-105 transition-transform duration-300 z-10">
-                <span className="text-slate-800 font-bold text-center block text-sm leading-tight line-clamp-3">
-                  {book.title}
-                </span>
+              <div className={`w-full h-full rounded-r-lg shadow-lg group-hover:shadow-2xl transition-all duration-500 transform group-hover:-rotate-y-12 group-hover:scale-105 origin-left flex flex-col ${book.coverColor} relative overflow-hidden border-l-4 border-black/20`}>
+                {/* Book Spine Effect */}
+                <div className="absolute inset-y-0 left-0 w-4 bg-black/10 z-10" />
+                
+                {/* Cover Content */}
+                <div className="flex-1 flex flex-col items-center justify-center p-4 text-center z-20">
+                  <div className="w-full h-[1px] bg-white/30 mb-4" />
+                  <h3 className="text-white font-black text-sm sm:text-base leading-tight line-clamp-4 px-2 drop-shadow-md tamil-text">
+                    {book.title}
+                  </h3>
+                  <div className="w-full h-[1px] bg-white/30 mt-4" />
+                </div>
+
+                {/* Texture Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10 pointer-events-none" />
+                <div className="absolute inset-0 opacity-10 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/paper.png')] pointer-events-none" />
               </div>
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
+
+              {/* Delete Button Overlay */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onDelete(book.id);
+                }}
+                className="absolute -top-2 -right-2 p-2 bg-white text-slate-400 hover:text-red-600 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-30 border border-slate-100"
+                title="நீக்கு"
+              >
+                <Trash2 size={16} />
+              </button>
             </div>
 
-            <div className="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <h3 
-                  className="font-bold text-slate-800 line-clamp-2 leading-snug cursor-pointer hover:text-indigo-600 transition-colors"
-                  onClick={() => onOpen(book)}
-                >
-                  {book.title}
-                </h3>
-                <p className="text-xs text-slate-400 mt-2">
-                  {new Date(book.importedAt).toLocaleDateString('ta-IN')} அன்று சேர்க்கப்பட்டது
-                </p>
-              </div>
-
-              <div className="flex gap-2 mt-4 pt-4 border-t border-slate-50">
-                <button
-                  type="button"
-                  onClick={() => onOpen(book)}
-                  className="flex-1 flex items-center justify-center gap-2 bg-slate-50 hover:bg-indigo-50 text-indigo-600 py-2.5 rounded-lg font-bold transition-all border border-slate-100 hover:border-indigo-100 active:scale-95"
-                >
-                  <ExternalLink size={16} />
-                  படிக்க
-                </button>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onDelete(book.id);
-                  }}
-                  className="p-2.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all border border-transparent hover:border-red-100 active:scale-90"
-                  aria-label="Delete Book"
-                  title="நீக்கு"
-                >
-                  <Trash2 size={20} />
-                </button>
-              </div>
+            {/* Book Info */}
+            <div className="space-y-1 cursor-pointer" onClick={() => onOpen(book)}>
+              <h4 className="font-bold text-slate-800 text-sm line-clamp-2 leading-tight group-hover:text-indigo-600 transition-colors">
+                {book.title}
+              </h4>
+              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                {new Date(book.importedAt).toLocaleDateString('ta-IN')}
+              </p>
             </div>
           </div>
         ))}

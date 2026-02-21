@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { Book } from '../types';
 import { processDocument } from '../services/documentService';
-import { Upload, Loader2, FileText, AlertCircle } from 'lucide-react';
+import { Upload, Loader2, FileText, AlertCircle, Share2 } from 'lucide-react';
 
 interface ImporterProps {
   onComplete: (book: Book) => void;
@@ -74,33 +74,37 @@ const Importer: React.FC<ImporterProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-12">
-      <div className="bg-white rounded-3xl border-2 border-dashed border-slate-200 p-12 text-center space-y-8">
-        <div className="mx-auto w-24 h-24 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-500">
+    <div className="max-w-3xl mx-auto py-12 animate-fadeIn">
+      <div className="bg-white rounded-[3rem] border-2 border-dashed border-stone-200 p-16 text-center space-y-10 shadow-xl shadow-stone-100 relative overflow-hidden">
+        {/* Decorative Background Element */}
+        <div className="absolute -top-24 -right-24 w-64 h-64 bg-orange-50 rounded-full blur-3xl opacity-50" />
+        <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-stone-50 rounded-full blur-3xl opacity-50" />
+
+        <div className="relative z-10 mx-auto w-28 h-28 bg-stone-50 rounded-[2rem] flex items-center justify-center text-orange-600 shadow-inner">
           {isProcessing ? (
-            <Loader2 className="animate-spin" size={40} />
+            <Loader2 className="animate-spin" size={48} />
           ) : (
-            <Upload size={40} />
+            <Upload size={48} className="group-hover:scale-110 transition-transform duration-500" />
           )}
         </div>
 
-        <div className="space-y-2">
-          <h2 className="text-2xl font-bold text-slate-800">கோப்பைப் பதிவேற்று</h2>
-          <p className="text-slate-500">PDF அல்லது Word (.docx) கோப்பைத் தேர்ந்தெடுக்கவும்</p>
+        <div className="relative z-10 space-y-4">
+          <h2 className="text-3xl font-black text-stone-800 tracking-tight tamil-text">கோப்பைப் பதிவேற்று</h2>
+          <p className="text-stone-400 font-medium max-w-xs mx-auto">உங்கள் PDF அல்லது Word (.docx) கோப்புகளை இங்கே இழுத்துப் போடவும் அல்லது தேர்ந்தெடுக்கவும்</p>
         </div>
 
         {isProcessing ? (
-          <div className="space-y-4">
-            <div className="flex items-center justify-center gap-3 text-indigo-600 font-medium">
+          <div className="relative z-10 space-y-6 max-w-sm mx-auto">
+            <div className="flex items-center justify-center gap-4 text-orange-600 font-black text-sm uppercase tracking-widest">
               <Loader2 className="animate-spin" size={20} />
               <span>{progress}</span>
             </div>
-            <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-              <div className="bg-indigo-500 h-full w-full transition-all duration-500" />
+            <div className="w-full bg-stone-100 rounded-full h-3 overflow-hidden shadow-inner">
+              <div className="bg-orange-500 h-full w-full transition-all duration-1000 ease-out" />
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-4">
+          <div className="relative z-10 flex flex-col items-center gap-6">
             <input 
               type="file" 
               ref={fileInputRef}
@@ -110,30 +114,51 @@ const Importer: React.FC<ImporterProps> = ({ onComplete }) => {
             />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-4 rounded-2xl font-bold shadow-xl shadow-indigo-100 transition-all flex items-center gap-3 active:scale-95"
+              className="bg-stone-900 hover:bg-orange-600 text-white px-12 py-5 rounded-2xl font-black shadow-2xl shadow-stone-200 transition-all duration-300 flex items-center gap-4 active:scale-95 group"
             >
-              <FileText size={20} />
-              கோப்பைத் தேர்ந்தெடு
+              <FileText size={22} className="group-hover:rotate-12 transition-transform" />
+              <span>கோப்பைத் தேர்ந்தெடு</span>
             </button>
-            <p className="text-xs text-slate-400">PDF மற்றும் Word (.docx) கோப்புகள் ஆதரிக்கப்படுகின்றன</p>
+            <div className="flex items-center gap-4 text-[10px] font-black text-stone-300 uppercase tracking-[0.2em]">
+              <div className="w-8 h-[1px] bg-stone-100" />
+              <span>PDF & DOCX ONLY</span>
+              <div className="w-8 h-[1px] bg-stone-100" />
+            </div>
           </div>
         )}
 
         {error && (
-          <div className="flex items-center gap-2 p-4 bg-red-50 text-red-600 rounded-xl text-sm justify-center border border-red-100">
-            <AlertCircle size={18} />
+          <div className="relative z-10 flex items-center gap-3 p-5 bg-red-50 text-red-600 rounded-2xl text-sm font-bold justify-center border border-red-100 animate-shake">
+            <AlertCircle size={20} />
             {error}
           </div>
         )}
       </div>
 
-      <div className="mt-12 bg-indigo-50/50 rounded-2xl p-6 border border-indigo-100">
-        <h3 className="font-bold text-indigo-800 mb-2">தகவல்:</h3>
-        <ul className="text-sm text-indigo-700 space-y-2 list-disc list-inside">
-          <li>இப்போது நீங்கள் Word (.docx) கோப்புகளையும் பதிவேற்றலாம்.</li>
-          <li>படங்கள் தானாகவே தவிர்க்கப்பட்டு உரை மட்டும் பிரித்தெடுக்கப்படும்.</li>
-          <li>உரைத் தேர்வின் மூலம் குறிப்பிட்ட பகுதியை மட்டும் நகலெடுக்கலாம் அல்லது பகிரலாம்.</li>
-        </ul>
+      <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white p-8 rounded-3xl border border-stone-100 shadow-sm space-y-4">
+          <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600">
+            <FileText size={20} />
+          </div>
+          <h4 className="font-black text-stone-800 text-sm tamil-text">அனைத்து கோப்புகளும்</h4>
+          <p className="text-xs text-stone-400 leading-relaxed font-medium">PDF மற்றும் Word (.docx) கோப்புகளிலிருந்து உரையை எளிதாகப் பிரித்தெடுக்கலாம்.</p>
+        </div>
+        
+        <div className="bg-white p-8 rounded-3xl border border-stone-100 shadow-sm space-y-4">
+          <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600">
+            <Upload size={20} />
+          </div>
+          <h4 className="font-black text-stone-800 text-sm tamil-text">வேகமான செயலாக்கம்</h4>
+          <p className="text-xs text-stone-400 leading-relaxed font-medium">படங்கள் தவிர்க்கப்பட்டு உரை மட்டும் மிக வேகமாகப் பிரித்தெடுக்கப்படும்.</p>
+        </div>
+
+        <div className="bg-white p-8 rounded-3xl border border-stone-100 shadow-sm space-y-4">
+          <div className="w-10 h-10 bg-sky-50 rounded-xl flex items-center justify-center text-sky-600">
+            <Share2 size={20} />
+          </div>
+          <h4 className="font-black text-stone-800 text-sm tamil-text">எளிதான பகிர்வு</h4>
+          <p className="text-xs text-stone-400 leading-relaxed font-medium">முக்கியமான பகுதிகளை மட்டும் தேர்ந்தெடுத்து சமூக ஊடகங்களில் பகிரலாம்.</p>
+        </div>
       </div>
     </div>
   );
