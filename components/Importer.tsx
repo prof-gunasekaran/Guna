@@ -105,20 +105,23 @@ const Importer: React.FC<ImporterProps> = ({ onComplete }) => {
           </div>
         ) : (
           <div className="relative z-10 flex flex-col items-center gap-6">
-            <input 
-              type="file" 
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              accept=".pdf,.docx"
-              className="hidden"
-            />
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="bg-stone-900 hover:bg-orange-600 text-white px-12 py-5 rounded-2xl font-black shadow-2xl shadow-stone-200 transition-all duration-300 flex items-center gap-4 active:scale-95 group"
-            >
-              <FileText size={22} className="group-hover:rotate-12 transition-transform" />
-              <span>கோப்பைத் தேர்ந்தெடு</span>
-            </button>
+            <div className="relative group">
+              <button
+                type="button"
+                className="bg-stone-900 group-hover:bg-orange-600 text-white px-12 py-5 rounded-2xl font-black shadow-2xl shadow-stone-200 transition-all duration-300 flex items-center gap-4 active:scale-95"
+              >
+                <FileText size={22} className="group-hover:rotate-12 transition-transform" />
+                <span>கோப்பைத் தேர்ந்தெடு</span>
+              </button>
+              <input 
+                type="file" 
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                accept="application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,.docx"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                aria-label="கோப்பைத் தேர்ந்தெடுக்கவும்"
+              />
+            </div>
             <div className="flex items-center gap-4 text-[10px] font-black text-stone-300 uppercase tracking-[0.2em]">
               <div className="w-8 h-[1px] bg-stone-100" />
               <span>PDF & DOCX ONLY</span>
